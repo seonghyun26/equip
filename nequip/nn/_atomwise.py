@@ -35,6 +35,7 @@ class AtomwiseLinear(GraphModuleMixin, torch.nn.Module):
         out_field: Optional[str] = None,
         irreps_in=None,
         irreps_out=None,
+        dropout=0,
     ):
         super().__init__()
         self.field = field
