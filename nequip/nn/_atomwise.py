@@ -51,11 +51,14 @@ class AtomwiseLinear(GraphModuleMixin, torch.nn.Module):
         self.linear = Linear(
             irreps_in=self.irreps_in[field], irreps_out=self.irreps_out[out_field]
         )
+        self.dropout = torch.nn.Dropout(p=dropout)
 
     def forward(self, data: AtomicDataDict.Type) -> AtomicDataDict.Type:
         data[self.out_field] = self.linear(data[self.field])
+        
+        #NOTE: dropout added
+        data[self.out_field] = self.dropout(data[self.out_field])
         return data
-
 
 class AtomwiseReduce(GraphModuleMixin, torch.nn.Module):
     constant: float
